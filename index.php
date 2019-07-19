@@ -17,6 +17,14 @@ $app->get('/', function() {
 
 });
 
+$app->get('/admin', function() {
+    
+	$page = new Hcode\PageAdmin();
+
+	$page->setTpl("index");
+
+});
+
 $app->run();
 
  ?>
