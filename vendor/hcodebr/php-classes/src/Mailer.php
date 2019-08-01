@@ -3,63 +3,66 @@
 namespace Hcode;
 
 use Rain\Tpl;
-use PHPMailer\PHPMailer\PHPMailer ;
+use PHPMailer\PHPMailer\PHPMailer;
 use \Slim\Slim;
 
 class Mailer{
 
-	const USERNAME = "xxxxxxxx";
-	const PASSWORD = "xxxxxxxx";
+	const USERNAME = "xxxxxx";
+	const PASSWORD = "xxxxxx";
 	const NAME_FROM = "Hcode Store";
 
 	private $mail;
 
 	public function __construct($toAddress, $toName, $subject, $tplName, $data = array())
 	{
-			$config = array(
-			"base_url"      => null,
-	    	"tpl_dir"       => $_SERVER['DOCUMENT_ROOT']."/views/email/",
-	    	"cache_dir"     => $_SERVER['DOCUMENT_ROOT']."/views-cache/",
+
+		$config = array(
+			//"base_url"      => null,
+	    	"tpl_dir"       => $_SERVER["DOCUMENT_ROOT"]."/views/email/",
+	    	"cache_dir"     => $_SERVER["DOCUMENT_ROOT"]."/views-cache/",
 	    	"debug"         => false // set to false to improve the speed
 		);
 
-		Tpl::configure( $config );
+			Tpl::configure($config);
 
-		$tpl = new Tpl();
+			$tpl = new Tpl;
 
-		foreach($data as $key => $value) {
-			$tpl->assing($key, $value);
-		}
+			foreach($data as $key => $value) {
+				$tpl->assign($key, $value);
+			}
 
-		$html = $tpl->draw($tplName, true);
+			$html = $tpl->draw($tplName, true);
 		
-		$this->mail =  new \PHPMailer ;
+			$this->mail = new PHPMailer;
 
-		$this->mail->isSMTP ();
+			$this->mail->isSMTP();
 
-		$this->mail->SMTPDebug  = 'html';
+			$this->mail->SMTPDebug  = 0;
 
-		$this->mail->Host  = 'smtp.gmail.com';
+			$this->mail->Debugoutput = 'html';
 
-		$this->mail->Port = 587;
+			$this->mail->Host  = 'smtp.gmail.com';
 
-		$this->mail->SMTPSecure  = 'tls';
+			$this->mail->Port = 587;
 
-		$this->mail->SMTPAuth  = true;
+			$this->mail->SMTPSecure = 'tls';
 
-		$this->mail->Username = Mailer::USERNAME;
+			$this->mail->SMTPAuth = true;
 
-		$this->mail->Password  = Mailer::PASSWORD;
+			$this->mail->Username = Mailer::USERNAME;
 
-		$this->mail->setFrom(Mailer::USERNAME, Mailer::NAME_FROM);
+			$this->mail->Password = Mailer::PASSWORD;
 
-		$this->mail->addAddress($toAddress, $toName);
+			$this->mail->setFrom(Mailer::USERNAME, Mailer::NAME_FROM);
 
-		$this->mail->Subject  = $subject;
+			$this->mail->addAddress($toAddress, $toName);
 
-		$this->mail->msgHTML($html);
+			$this->mail->Subject = $subject;
 
-		$this->mail->AltBody  =  ' Este é um corpo de mensagem de texto simples ' ;
+			$this->mail->msgHTML($html);
+
+			$this->mail->AltBody = 'Este é um corpo de mensagem de texto simples';
 
 	}
 

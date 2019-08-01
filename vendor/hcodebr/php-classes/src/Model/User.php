@@ -252,8 +252,8 @@ class User extends Model {
 				}				
 
 				$mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha da Hcode Store", "forgot", array(
-					"name"=>$data['desperson'],
-					"link"=>$link
+						"name"=>$data['desperson'],
+						"link"=>$link
 				));				
 
 				$mailer->send();
