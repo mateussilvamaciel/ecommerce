@@ -12,7 +12,7 @@ $app->get("/admin/categories", function(){
 
 	$categories = Category::listAll();
 
-	$page = new Hcode\PageAdmin();
+	$page = new PageAdmin();
 
 	$page->setTpl("categories", [
 		'categories'=>$categories
@@ -23,9 +23,9 @@ $app->get("/admin/categories/create", function(){
 
 	User::verifyLogin();
 
-	$page = new Hcode\PageAdmin();
+	$page = new PageAdmin();
 
-	$page->setTpl("categories-create");
+	$page->setTpl("categories-create");	
 
 });
 
@@ -41,7 +41,7 @@ $app->post("/admin/categories/create", function(){
 
 	header('Location: /admin/categories');
 	exit;
-	
+
 });
 
 $app->get("/admin/categories/:idcategory/delete", function($idcategory){
@@ -67,11 +67,12 @@ $app->get("/admin/categories/:idcategory", function($idcategory){
 
 	$category->get((int)$idcategory);
 
-	$page = new Hcode\PageAdmin();
+	$page = new PageAdmin();
 
-	$page->setTpl("categories-update",[
+	$page->setTpl("categories-update", [
 		'category'=>$category->getValues()
-	]);
+	]);	
+
 });
 
 $app->post("/admin/categories/:idcategory", function($idcategory){
@@ -84,13 +85,12 @@ $app->post("/admin/categories/:idcategory", function($idcategory){
 
 	$category->setData($_POST);
 
-	$category->save();
+	$category->save();	
 
 	header('Location: /admin/categories');
 	exit;
 
 });
-
 
 $app->get("/admin/categories/:idcategory/products", function($idcategory){
 
@@ -100,13 +100,14 @@ $app->get("/admin/categories/:idcategory/products", function($idcategory){
 
 	$category->get((int)$idcategory);
 
-	$page = new Hcode\PageAdmin();
+	$page = new PageAdmin();
 
 	$page->setTpl("categories-products", [
 		'category'=>$category->getValues(),
 		'productsRelated'=>$category->getProducts(),
 		'productsNotRelated'=>$category->getProducts(false)
 	]);
+
 });
 
 $app->get("/admin/categories/:idcategory/products/:idproduct/add", function($idcategory, $idproduct){
@@ -144,8 +145,7 @@ $app->get("/admin/categories/:idcategory/products/:idproduct/remove", function($
 
 	header("Location: /admin/categories/".$idcategory."/products");
 	exit;
-
+	
 });
-
 
 ?>
