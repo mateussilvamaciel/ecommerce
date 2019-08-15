@@ -14,7 +14,7 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
-            <?php $counter1=-1;  if( isset($produtos) && ( is_array($produtos) || $produtos instanceof Traversable ) && sizeof($produtos) ) foreach( $produtos as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($products) && ( is_array($products) || $products instanceof Traversable ) && sizeof($products) ) foreach( $products as $key1 => $value1 ){ $counter1++; ?>
 
             <div class="col-md-3 col-sm-6">
                 <div class="single-shop-product">
@@ -27,7 +27,7 @@
                     </div>  
                     
                     <div class="product-option-shop">
-                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70"> Comprar</a>
+                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow" href="/cart/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add"> Comprar</a>
                     </div>                       
                 </div>
             </div>
@@ -46,6 +46,7 @@
                         <li><a href="<?php echo htmlspecialchars( $value1["link"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["page"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
                         <?php } ?>
 
+                        </ul>
                     </nav>                        
                 </div>
             </div>
