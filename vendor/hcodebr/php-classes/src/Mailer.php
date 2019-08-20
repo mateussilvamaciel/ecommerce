@@ -8,8 +8,8 @@ use \Slim\Slim;
 
 class Mailer{
 
-	const USERNAME = "xxxxxx";
-	const PASSWORD = "xxxxxx";
+	const USERNAME = "xxxxxxxxxx";
+	const PASSWORD = "xxxxxxxxxx";
 	const NAME_FROM = "Hcode Store";
 
 	private $mail;
