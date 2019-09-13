@@ -2,18 +2,44 @@
 
 use \Hcode\PageAdmin;
 use \Hcode\Model\User;
-/////////////////////////////////////////////////Criando as rotas
-///listar todos os usuarios
+
 $app->get("/admin/users", function(){
 
 	User::verifyLogin();
 
-	$users = User::listAll();
+	$search = (isset($_GET['search'])) ? $_GET['search'] : "";
+	$page = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
 
-	$page = new Hcode\PageAdmin();
+	if ($search != ''){
+
+		$pagination = User::getPageSearch($search, $page);
+
+	} else {
+
+		$pagination = User::getPage($page);
+	}
+
+
+	$pages = [];
+
+	for ($x = 0; $x < $pagination['pages']; $x++)
+	{
+		array_push($pages, [
+			'href'=>'/admin/users?'.http_build_query([
+				'page'=>$x +1,
+				'search'=>$search
+			]),
+			'text'=>$x + 1
+		]);
+
+	}
+
+	$page = new PageAdmin();
 
 	$page->setTpl("users", array(
-		"users"=>$users
+		"users"=>$pagination['data'],
+		"search"=>$search,
+		"pages"=>$pages
 	));
 
 });
@@ -22,7 +48,7 @@ $app->get("/admin/users/create", function(){
 
 	User::verifyLogin();
 
-	$page = new Hcode\PageAdmin();
+	$page = new PageAdmin();
 
 	$page->setTpl("users-create");
 
