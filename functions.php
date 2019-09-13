@@ -3,6 +3,7 @@
 
 use \Hcode\Model\User;
 use \Hcode\Model\Cart;
+use \Hcode\Model\Order;
 
 function post($key)
 {
@@ -11,6 +12,11 @@ function post($key)
 function get($key)
 {
 	return str_replace("'", "", $_GET[$key]);
+}
+
+function formatDate($date)
+{
+	return date('d/m/Y', strtotime($date));
 }
 
 function formatPrice($vlprice)
